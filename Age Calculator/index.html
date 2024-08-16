@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Age Calculator</title>
+  <style>
+    body {
+      background-color: #222;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #111;
+      padding: 20px;
+      border: 2px solid #0f0;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid #0f0;
+      border-radius: 5px;
+      text-align: center;
+      width: 80px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #0f0;
+      color: #222;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Age Calculator</h1>
+
+    <div>
+      <label for="date">Date:</label>
+      <input type="number" id="date" min="1" max="31" placeholder="Date">
+    </div>
+    <div>
+      <label for="month">Month:</label>
+      <input type="number" id="month" min="1" max="12" placeholder="Month">
+    </div>
+    <div>
+      <label for="year">Year:</label>
+      <input type="number" id="year" min="1900" max="2023" placeholder="Year">
+    </div>
+
+    <button onclick="calculateAge()">Submit</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateAge() {
+      let date = document.getElementById("date").value;
+      let month = document.getElementById("month").value;
+      let year = document.getElementById("year").value;
+
+      let today = new Date();
+      let birthDate = new Date(year, month - 1, date);
+
+      let age = today.getFullYear() - birthDate.getFullYear();
+      let months = today.getMonth() - birthDate.getMonth();
+      let days = today.getDate() - birthDate.getDate();
+
+      if (months < 0 || (months === 0 && days < 0)) {
+        age--;
+        months += 12;
+      }
+
+      if (days < 0) {
+        let lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 0);
+        days += lastMonth.getDate();
+        months--;
+      }
+
+      document.getElementById("result").innerHTML = "Your age is " + age + " Years " + months + " Months " + days + " Days";
+    }
+  </script>
+
+</body>
+</html>
